@@ -1,0 +1,7 @@
+[project]
+name = "c-docs"
+version = "0.1.0"
+description = "Convert HTML C documentation to JSON for easy lookup"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
