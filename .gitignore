@@ -3,3 +3,9 @@
 
 # Plume-related files.
 .plume-scripts
+
+# Python.
+__pycache__
+
+# VS Code
+.vscode/

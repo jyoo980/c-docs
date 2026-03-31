@@ -1,0 +1,9 @@
+.git
+.gitignore
+.venv
+.ruff_cache
+.plume-scripts
+.vscode
+__pycache__
+*.pyc
+TAGS

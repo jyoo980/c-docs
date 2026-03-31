@@ -1,4 +1,9 @@
-# Run all code style checks.
+build:
+	docker build -t c-docs .
+
+run:
+	docker run --rm -it --entrypoint /bin/bash c-docs
+
 checks: style-fix style-check
 
 # Code style; defines `style-check` and `style-fix`.
