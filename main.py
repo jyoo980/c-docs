@@ -100,6 +100,9 @@ def _parse_documentation(path_to_entry_html: str) -> ParsedDocumentation | None:
     if not first_p:
         return None
 
+    header_component = html.find(class_="t-dsc-header")
+    header = _get_header(header_component)
+
     desc_parts = []
     for sibling in [first_p, *first_p.find_next_siblings()]:
         if sibling.name == "h3":
@@ -142,6 +145,7 @@ def _parse_documentation(path_to_entry_html: str) -> ParsedDocumentation | None:
 
     return ParsedDocumentation(
         entity_type=entity_type,
+        header_name=header,
         description=description,
         parameters=parameters,
         return_value_description=return_value_description,
@@ -162,8 +166,39 @@ def _get_text(tag) -> str:
         str: Text from a BeautifulSoup tag, preserving spaces around inline elements.
     """
     return re.sub(
-        r" ([.,;:!?)])", r"\1", re.sub(r" {2,}", " ", tag.get_text(separator=" ", strip=True))
+        r" ([.,;:!?)])",
+        r"\1",
+        re.sub(r" {2,}", " ", tag.get_text(separator=" ", strip=True)),
     )
+
+
+def _get_header(header_desc_row) -> str:
+    """Return the header from a header row component.
+
+    The header row component is a table row that matches the format below:
+
+        <tr class="t-dsc-header">
+            <th colspan="2"> Defined in header <code>&lt;locale.h&gt;</code>  </th>
+        </tr>
+
+    This function returns the part from the row between the <code> blocks. E.g., "locale.h" for
+    the example above.
+
+    Args:
+        header_desc_row: The header description row.
+
+    Returns:
+        str: The name of the header parsed from the header description row.
+    """
+    if not header_desc_row:
+        return ""
+    first_heading = header_desc_row.find("th")
+    if not first_heading:
+        return ""
+    header_matches = re.findall(r"<([^<>]*)>", _get_text(first_heading))
+    if not header_matches:
+        return ""
+    return header_matches[0]
 
 
 if __name__ == "__main__":

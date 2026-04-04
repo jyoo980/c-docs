@@ -32,6 +32,7 @@ class ParsedDocumentation:
 
     Attributes:
         entity_type (EntityType): The type of the entity parsed from the HTML.
+        header_name (str): The name of the header file in which the entity is declared.
         description (str): The description parsed from the HTML.
         parameters (list[FunctionParameter]): The documentation for the function parameters,
             empty for all entities except for functions.
@@ -39,6 +40,7 @@ class ParsedDocumentation:
     """
 
     entity_type: EntityType
+    header_name: str
     description: str
     parameters: list[FunctionParameter]
     return_value_description: str
