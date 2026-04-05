@@ -145,7 +145,7 @@ def _parse_documentation(path_to_entry_html: str) -> ParsedDocumentation | None:
 
     return ParsedDocumentation(
         entity_type=entity_type,
-        header_name=header,
+        header_file_basename=header,
         description=description,
         parameters=parameters,
         return_value_description=return_value_description,
